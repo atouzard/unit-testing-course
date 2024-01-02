@@ -1,0 +1,10 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dino-stats-container {
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: 12px;
+}
