@@ -55,8 +55,7 @@ For first-time users of this command, you may encounter an error prompting you t
 ```
 symfony server:ca:install
 ```
-
-3. Access the Site
+### 4. Access the Site
 
 Visit the site at https://localhost:8000 and enjoy exploring!
 
