@@ -7,7 +7,7 @@ use http\Client\Request;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class StatusApiService
+class AdventurerApiService
 {
     private HttpClientInterface $client;
 
@@ -31,5 +31,10 @@ class StatusApiService
         }
 
         return $adventurers;
+    }
+
+    public function clearAlerts(): void
+    {
+        // TODO : This should makes an API call to resolve alert
     }
 }

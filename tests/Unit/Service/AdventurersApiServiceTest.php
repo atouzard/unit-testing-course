@@ -2,12 +2,12 @@
 
 namespace App\Tests\Unit\Service;
 use App\Entity\Adventurer;
-use App\Service\StatusApiService;
+use App\Service\AdventurerApiService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-class StatusApiServiceTest extends TestCase
+class AdventurersApiServiceTest extends TestCase
 {
     public function testAdventurersApiService(): void
     {
@@ -24,7 +24,7 @@ class StatusApiServiceTest extends TestCase
 ]');
         $client = new MockHttpClient($response);
 
-        $service = new StatusApiService($client);
+        $service = new AdventurerApiService($client);
 
         $adventurers = [
             new Adventurer('Anne', 'Cleric', 0),
@@ -44,7 +44,7 @@ class StatusApiServiceTest extends TestCase
         $response = new MockResponse('[{"name": "Anne","status": "sleeping"}]');
         $client = new MockHttpClient($response);
 
-        $service = new StatusApiService($client);
+        $service = new AdventurerApiService($client);
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Adventurer Anne not found');
