@@ -16,9 +16,14 @@ class AdventurerApiService
         $this->client = $client;
     }
 
+    public function clearAlertNotification(): void
+    {
+        // Do some Api Stuff
+    }
+
     public function updateStatuses(array $adventurers): array
     {
-        $response = $this->client->request('GET', 'http://localhost:8001/api/adventurers');
+        $response = $this->client->request('GET', 'http://localhost:8000/api/adventurers');
 
         foreach ($response->toArray() as $newAdventurer) {
             foreach ($adventurers as $adventurer) {

@@ -26,6 +26,7 @@ class MainController extends AbstractController
 
         return $this->render('main/index.html.twig', [
             'adventurers' => $adventurers,
+            'isInAlert' => $alertRepository->isInAlert(),
         ]);
     }
 
@@ -36,6 +37,8 @@ class MainController extends AbstractController
             throw $this->createAccessDeniedException('Invalid CSRF token');
         }
 
-        dump('TODO: resolve alert');die;
+        $alertHelper->endAlert();
+
+        return $this->redirectToRoute('main_controller');
     }
 }

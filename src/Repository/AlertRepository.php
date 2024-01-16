@@ -22,12 +22,18 @@ class AlertRepository extends ServiceEntityRepository
         parent::__construct($registry, Alert::class);
     }
 
-//    public function findMostRecent(): ?Alert
-//    {
-//        return $this->createQueryBuilder('lock_down')
-//            ->orderBy('lock_down.createdAt', 'DESC')
-//            ->setMaxResults(1)
-//            ->getQuery()
-//            ->getOneOrNullResult();
-//    }
+    public function isInAlert(): bool
+    {
+        $alert = $this->findMostRecent();
+        return $alert ? $alert->isActive() : false;
+    }
+
+    public function findMostRecent(): ?Alert
+    {
+        return $this->createQueryBuilder('lock_down')
+            ->orderBy('lock_down.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
