@@ -13,20 +13,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    #[Route(path: '/', name: 'main_controller', methods: ['GET'])]
+    #[Route(path: '/', name: 'main_controller', methods: ['GET', 'POST'])]
     public function index(
         AdventurerRepository $adventurerRepository,
         AdventurerApiService $statusApiService,
         AlertRepository      $alertRepository,
+        Request $request,
     ): Response
     {
-        $adventurers = $adventurerRepository->findAll();
+        if ($request->getMethod() === 'POST') {
+            $adventurers = $adventurerRepository->search($request->get('searchTerm'));
+        } else {
+            $adventurers = $adventurerRepository->findAll();
+        }
 
         $adventurers = $statusApiService->updateStatuses($adventurers);
 
         return $this->render('main/index.html.twig', [
             'adventurers' => $adventurers,
             'isInAlert' => $alertRepository->isInAlert(),
+            'searchTerm' => $request->get('searchTerm'),
         ]);
     }
 

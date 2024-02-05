@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="container mt-4">
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="container volcano mt-4" style="flex-grow: 1;">
+        <h1 class="mt-5">New adventurer</h1>
+        <div class="dino-stats-container mt-2 p-3">
+            {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.class) }}
+                {{ form_row(form.health) }}
+            <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

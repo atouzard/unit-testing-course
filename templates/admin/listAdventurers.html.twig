@@ -1,30 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if isInAlert %}
-        {{ include('main/_lockDownAlert.html.twig') }}
-    {% endif %}
 <div class="container volcano mt-4" style="flex-grow: 1;">
     <h1 class="mt-5">Adventurer Guild</h1>
-    <div>
-        <form method="post">
-            <div class="row justify-content-end">
-                <div class="col-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="searchTerm" value="{{ searchTerm }}">
-                        <input type="submit" id="search_submit" class="btn btn-outline-secondary" value="Rechercher" />
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+    <a href="{{ path('admin_adventurer_create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Enlist adventurer</a>
     <div class="dino-stats-container mt-2 p-3">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Class</th>
-                <th>Status</th>
                 <th>Health</th>
                 <th></th>
             </tr>
@@ -34,12 +19,13 @@
                 <tr>
                     <td>{{ adventurer.name }}</td>
                     <td>{{ adventurer.class }}</td>
-                    <td>{{ adventurer.status }}</td>
                     <td>{{ adventurer.health }} / 15</td>
-                    <td>{{ adventurer.healthDescription }}</td>
+                    <th>
+                        <a href="#" class="btn btn-sm btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </th>
                 </tr>
-            {% else %}
-                No adventurers found.
             {% endfor %}
             </tbody>
         </table>

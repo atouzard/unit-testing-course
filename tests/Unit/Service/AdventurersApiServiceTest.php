@@ -38,17 +38,4 @@ class AdventurersApiServiceTest extends TestCase
         $this->assertSame(false, $adventurers[1]->isAvailable());
         $this->assertSame(true, $adventurers[2]->isAvailable());
     }
-
-    public function testUpdateStatusesWithNotFoundAdventurerShouldThrowAnError(): void
-    {
-        $response = new MockResponse('[{"name": "Anne","status": "sleeping"}]');
-        $client = new MockHttpClient($response);
-
-        $service = new AdventurerApiService($client);
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Adventurer Anne not found');
-
-        $service->updateStatuses([]);
-    }
 }

@@ -32,7 +32,6 @@ class AdventurerApiService
                     continue(2);
                 }
             }
-            throw new \RuntimeException('Adventurer '. $newAdventurer['name'] .' not found');
         }
 
         return $adventurers;

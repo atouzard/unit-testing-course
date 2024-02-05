@@ -20,4 +20,13 @@ class AdventurerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Adventurer::class);
     }
+
+    public function search($searchTerm): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.name like :name')
+            ->setParameter('name', "%$searchTerm%")
+            ->getQuery()->getResult()
+        ;
+    }
 }
