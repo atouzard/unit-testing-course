@@ -10,15 +10,15 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
-        "symfony/asset": "6.3.*",
-        "symfony/config": "6.3.*",
-        "symfony/console": "6.3.*",
-        "symfony/dotenv": "6.3.*",
+        "symfony/asset": "^7.2",
+        "symfony/config": "^7.2",
+        "symfony/console": "^7.2",
+        "symfony/dotenv": "^7.2",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.3.*",
-        "symfony/runtime": "6.3.*",
-        "symfony/twig-bundle": "6.3.*",
-        "symfony/yaml": "6.3.*"
+        "symfony/framework-bundle": "^7.2",
+        "symfony/runtime": "^7.2",
+        "symfony/twig-bundle": "^7.2",
+        "symfony/yaml": "^7.2"
     },
     "config": {
         "allow-plugins": {
@@ -68,13 +68,13 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.3.*"
+            "require": "^7.2"
         }
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.5",
         "symfony/maker-bundle": "^1.52",
-        "symfony/stopwatch": "6.3.*",
-        "symfony/web-profiler-bundle": "6.3.*"
+        "symfony/stopwatch": "^7.2",
+        "symfony/web-profiler-bundle": "^7.2"
     }
 }
