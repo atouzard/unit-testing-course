@@ -18,6 +18,8 @@ class Adventurer
     private string $class;
     #[ORM\Column]
     private int $health;
+    #[ORM\Column]
+    private string $status;
 
     public function __construct(
         string $name,
@@ -43,5 +45,52 @@ class Adventurer
     public function getHealth(): int
     {
         return $this->health;
+    }
+
+    public function getHealthDescription(): string
+    {
+        if ($this->health >= 15) {
+            return 'fine';
+        }
+
+        if ($this->health > 5) {
+            return 'wounded';
+        }
+
+        if ($this->health > 0) {
+            return 'badly wounded';
+        }
+
+        return 'dead';
+    }
+
+    public function isAvailable(): bool
+    {
+        if ($this->health < 10) {
+            return false;
+        }
+
+        if ($this->status === 'sleeping') {
+            return false;
+        }
+
+        if ($this->status === 'eating') {
+            return false;
+        }
+
+        if ($this->status === 'unavailable') {
+            return false;
+        }
+
+        if ($this->status === 'sick') {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
     }
 }
