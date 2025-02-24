@@ -18,8 +18,8 @@ class Adventurer
     private string $class;
     #[ORM\Column]
     private int $health;
-    #[ORM\Column]
-    private string $status;
+    #[ORM\Column(enumType: AdventurerStatus::class)]
+    private ?AdventurerStatus $status = null;
 
     public function __construct(
         string $name,
@@ -70,27 +70,41 @@ class Adventurer
             return false;
         }
 
-        if ($this->status === 'sleeping') {
+        if ($this->status === AdventurerStatus::POISONED) {
             return false;
         }
 
-        if ($this->status === 'eating') {
+        if ($this->status === AdventurerStatus::SLEEPING) {
             return false;
         }
 
-        if ($this->status === 'unavailable') {
+        if ($this->status === AdventurerStatus::EATING) {
             return false;
         }
 
-        if ($this->status === 'sick') {
+        if ($this->status === AdventurerStatus::UNAVAILABLE) {
+            return false;
+        }gl
+
+        if ($this->status === AdventurerStatus::SICK) {
             return false;
         }
 
         return true;
     }
 
-    public function setStatus(string $status): void
+    public function setStatus(AdventurerStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function getStatus(): ?AdventurerStatus
+    {
+        return $this->status;
+    }
+
+    public function getDescription(): string
+    {
+        return sprintf('Nom : %s, Class : %s, HP : %d', $this->name, $this->class, $this->health);
     }
 }

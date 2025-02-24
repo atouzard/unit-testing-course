@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Adventurer;
+use App\Entity\AdventurerStatus;
 use PHPUnit\Framework\TestCase;
 
 class AdventurerTest extends TestCase
@@ -45,7 +46,7 @@ class AdventurerTest extends TestCase
         yield 'A available adventurer with 2 HP should not be available' => ['available', 2, false];
         yield 'A available adventurer with —2 HP should not be available' => ['available', -2, false];
         yield 'A eating adventurer with 6 HP should not be available' => ['eating', 6, false];
-        yield 'A poisoned adventurer with 6 HP should not be available' => ['poisoned', 12, false];
+        yield 'A poisoned adventurer with 12 HP should not be available' => ['poisoned', 12, false];
     }
 
     /**
@@ -54,8 +55,14 @@ class AdventurerTest extends TestCase
     public function testAdventurerAvailability(string $status, int $health, bool $available): void
     {
         $adventurer = new Adventurer('Anne', 'Cleric', $health);
-        $adventurer->setStatus($status);
+
+        $adventurer->setStatus(AdventurerStatus::tryFrom($status));
 
         $this->assertSame($available, $adventurer->isAvailable());
+    }
+
+    public function testAventurerDescription(){
+        $adventurer = new Adventurer('Anne', 'Cleric', 5);
+        $this->assertSame("Nom : Anne, Class : Cleric, HP : 5", $adventurer->getDescription());
     }
 }
