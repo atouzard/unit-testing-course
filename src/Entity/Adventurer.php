@@ -18,18 +18,22 @@ class Adventurer
     private string $class;
     #[ORM\Column]
     private int $health;
+    #[ORM\Column]
+    private int $xp;
     #[ORM\Column(enumType: AdventurerStatus::class)]
     private ?AdventurerStatus $status = null;
 
     public function __construct(
         string $name,
         string $class = 'Unknown',
-        int $health = 0
+        int    $health = 0,
+        int    $xp = 0
     )
     {
         $this->name = $name;
         $this->class = $class;
         $this->health = $health;
+        $this->xp = $xp;
     }
 
     public function getName(): string
@@ -45,6 +49,11 @@ class Adventurer
     public function getHealth(): int
     {
         return $this->health;
+    }
+
+    public function getXp(): int
+    {
+        return $this->xp;
     }
 
     public function getHealthDescription(): string
@@ -84,7 +93,7 @@ class Adventurer
 
         if ($this->status === AdventurerStatus::UNAVAILABLE) {
             return false;
-        }gl
+        }
 
         if ($this->status === AdventurerStatus::SICK) {
             return false;
@@ -106,5 +115,48 @@ class Adventurer
     public function getDescription(): string
     {
         return sprintf('Nom : %s, Class : %s, HP : %d', $this->name, $this->class, $this->health);
+    }
+
+    public function heal(int $health): void
+    {
+        if ($this->health == 0 || $this->health < 0) {
+            $this->health = 0;
+            return;
+        }
+
+        $this->health = $health + $this->health;
+
+        if ($this->health > 20) {
+            $this->health = 20;
+        } else if ($this->health < 0) {
+            $this->health = 0;
+        }
+    }
+
+    public function addXp(int $xp): void
+    {
+        $newXp = $this->getXp() + $xp;
+
+        $this->xp = $newXp;
+    }
+
+    public function getLevel(): int
+    {
+        if ($this->xp < 0) {
+            $this->xp = 0;
+        }
+
+        $lvl = $this->xp / 1000 + 1;
+
+        if ($lvl > 20) {
+            return 20;
+        }
+
+        return floor($lvl);
+    }
+
+    public function getLevelAdvancementPercentage(): int
+    {
+        return ($this->xp % 1000) / 10;
     }
 }

@@ -61,8 +61,52 @@ class AdventurerTest extends TestCase
         $this->assertSame($available, $adventurer->isAvailable());
     }
 
-    public function testAventurerDescription(){
+    public function testAventurerDescription() {
         $adventurer = new Adventurer('Anne', 'Cleric', 5);
         $this->assertSame("Nom : Anne, Class : Cleric, HP : 5", $adventurer->getDescription());
+    }
+
+    public function adventurerHealDataProvider(): \Generator
+    {
+        yield 'Heal 5 HP should succeed' => [10, 5, 15];
+        yield 'Heal should not go over max HP' => [10, 15, 20];
+        yield 'Heal should not go under min HP' => [10, -15, 0];
+        yield 'Dead adventurer should not heal' => [0, 5, 0];
+        yield 'Negative health adventurer should not heal' => [-5, 8, 0];
+    }
+
+    /**
+     * @dataProvider adventurerHealDataProvider
+     */
+    public function testHealAdventurer($vieDepart, $vieSoignee, $vieFinale) {
+        $adventurer = new Adventurer('Anne', 'Cleric', $vieDepart);
+
+        $adventurer->heal($vieSoignee);
+
+        $this->assertSame($vieFinale, $adventurer->getHealth());
+    }
+
+
+
+    public function adventurerXPLevelsDataProvider(): \Generator
+    {
+        yield 'Adventurer is level 1 with 0 xp' => [0, 1, 0];
+        yield 'Adventurer gain one level' => [500, 1, 50];
+        yield 'Adventurer gain two level' => [1600, 2, 60];
+        yield 'Adventurer max level cannot go over level twenty' => [22000, 20, 0];
+        yield 'Adventurer gain three level' => [2000, 3, 0];
+        yield 'Negative xp cannot exist' => [-1500, 1, 0];
+    }
+
+    /**
+     * @dataProvider adventurerXPLevelsDataProvider
+     */
+    public function testAdventurerXPLevels($xp, $level, $advancement): void
+    {
+        $adventurer = new Adventurer('Anne', 'Cleric', 10);
+        $adventurer->addXP($xp);
+        $this->assertSame($xp, $adventurer->getXp());
+        $this->assertSame($level, $adventurer->getLevel());
+        $this->assertSame($advancement, $adventurer->getLevelAdvancementPercentage());
     }
 }
