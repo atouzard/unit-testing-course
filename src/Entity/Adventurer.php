@@ -21,7 +21,7 @@ class Adventurer
     #[ORM\Column]
     private int $xp;
     #[ORM\Column(enumType: AdventurerStatus::class)]
-    private ?AdventurerStatus $status = null;
+    private ?AdventurerStatus $status = AdventurerStatus::AVAILABLE;
 
     public function __construct(
         string $name,
